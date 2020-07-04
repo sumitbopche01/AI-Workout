@@ -1,0 +1,42 @@
+# for storing sensitive configuration files
+config
+
+# for logs
+log
+*.log
+/log/
+
+# for OS generated files
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# for node
+/node_modules/
+npm-debug.log
+/npm-debug.log.*
+.env
+build
+dist
+
+# for package
+package-lock.json
+
+# for vscode
+.vscode
+
+# for Linux
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*

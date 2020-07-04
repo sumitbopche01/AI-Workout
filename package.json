@@ -1,0 +1,25 @@
+{
+  "name": "aiworkout",
+  "version": "1.0.0",
+  "description": "AI and Image processing to gamify workout",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "keywords": [
+    "AI",
+    "Workout",
+    "Gamify"
+  ],
+  "author": "Elvis Rozario",
+  "license": "ISC",
+  "devDependencies": {
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.3.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
