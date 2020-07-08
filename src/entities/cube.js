@@ -1,24 +1,23 @@
 
 const CUBE_LINES = [[0, 1], [1, 3], [3, 2], [2, 0], [2, 6], [3, 7], [0, 4], [1, 5], [6, 7], [6, 4], [7, 5], [4, 5]];
 const CUBE_VERTICES = [[-1, -1, -1], [1, -1, -1], [-1, 1, -1], [1, 1, -1], [-1, -1, 1], [1, -1, 1], [-1, 1, 1], [1, 1, 1]];
+import gsap from "gsap";
+const depth = 1000
 
 export default class Cube {
-    constructor(ctx, x, y, z) {
-        this.x = (Math.random() - 0.5) * window.gameWidth;
-        this.y = (Math.random() - 0.5) * window.gameWidth;
-        this.z = (Math.random() - 0.5) * window.gameWidth;
-        this.radius = Math.floor(Math.random() * 12 + 10);
+    constructor(ctx) {
+        this.x = window.gameWidth * 0.001;
+        this.y = window.gameWidth * 0.001;
+        this.z = window.gameWidth * 0.001;
+        console.log(window.gameWidth);
+        this.radius = Math.floor(22);
         this.ctx = ctx;
-
-        // TweenMax.to(this, Math.random() * 20 + 15, {
-        //   x: (Math.random() - 0.5) * (window.gameWidth * 0.5),
-        //   y: (Math.random() - 0.5) * (window.gameWidth * 0.5),
-        //   z: (Math.random() - 0.5) * window.gameWidth,
-        //   repeat: -1,
-        //   yoyo: true,
-        //   ease: Power2.EaseOut,
-        //   delay: Math.random() * -35
-        // });
+        this.tween = gsap.to(this, {
+            duration: 3,
+            z: -(window.gameWidth - 200),
+            onComplete: this.gotHit,
+            onCompleteParams: ["Got hit by the cube"],
+        });
     }
     // Do some math to project the 3D position into the 2D canvas
     project(x, y, z) {
@@ -31,6 +30,22 @@ export default class Cube {
             y: yProject
         }
     }
+
+    shake() {
+        this.tween.pause();
+        gsap.to(this, 0.1, { x: "+=20", repeat: 5 });
+        gsap.to(this, 0.1, { x: "-=20", repeat: 5 });
+        this.tween.resume();
+    }
+
+    gotHit(message) {
+        console.log(message);
+    }
+
+    destroy() {
+        this.tween.kill();
+    }
+
     // Draw the dot on the canvas
     draw() {
         // Do not render a cube that is in front of the camera

@@ -6,6 +6,7 @@ export default function createEntities(entities, ctx) {
 
     // Create a new dot based on the amount needed
     // for (let i = 0; i < 100; i++) {
-        entities.push(new Cube(ctx));
+        let cube = new Cube(ctx)
+        entities.push(cube);
     // }
 }
