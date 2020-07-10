@@ -87,6 +87,8 @@ export default class Cube {
         this.drawBottomFace();
         this.drawFrontFace();
         this.drawBackFace();
+        //from_left, from_right, from_upper, from_bottom
+        this.drawArrow();
     }
 
     drawLeftFace() {
@@ -152,9 +154,6 @@ export default class Cube {
         this.ctx.fillStyle = this.cube_color;
         this.ctx.fill()
         this.ctx.stroke();
-
-        //from_left, from_right, from_upper, from_bottom
-        this.drawArrow();
     }
 
     drawArrow() {
