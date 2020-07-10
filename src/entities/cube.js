@@ -53,7 +53,9 @@ export default class Cube {
         //   return;
         // }
         this.points_array = []
-        this.cube_color = "rgba(10, 250, 0, 0.3)";
+        this.cube_color = "rgba(100, 200, 0, 0.3)";
+        this.arrow_color = "rgba(0, 250, 0, 0.6)";
+        this.arrow_direction = 'from_bottom';
         for (let i = 0; i < CUBE_LINES.length; i++) {
 
             const v1 = {
@@ -247,8 +249,57 @@ export default class Cube {
         this.ctx.fillStyle = this.cube_color;
         this.ctx.fill()
         this.ctx.stroke();
+
+        //from_left, from_right, from_upper, from_bottom
+        this.drawArrow();
     }
 
+    drawArrow() {
+        let arrow_points = {
+            from_left: {
+                x1: [0, 0],
+                y1: [0, 1],
+                x2: [2, 2],
+                y2: [2, 3]
+            },
+            from_right: {
+                x1: [0, 2],
+                y1: [0, 3],
+                x2: [1, 2],
+                y2: [1, 3]
+            },
+            from_upper: {
+                x1: [0, 0],
+                y1: [0, 1],
+                x2: [0, 2],
+                y2: [0, 3]
+            },
+            from_bottom: {
+                x1: [2, 2],
+                y1: [2, 3],
+                x2: [1, 2],
+                y2: [1, 3]
+            }
+        }
+
+        let x1 = arrow_points[this.arrow_direction].x1,
+        y1 = arrow_points[this.arrow_direction].y1,
+        x2 = arrow_points[this.arrow_direction].x2,
+        y2 = arrow_points[this.arrow_direction].y2;
+
+        let center_x = this.points_array[0][0] + (this.points_array[0][2] - this.points_array[0][0])/2
+        let center_y = this.points_array[0][1] + (this.points_array[2][3] - this.points_array[0][1])/2
+
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.points_array[x1[0]][x1[1]], this.points_array[y1[0]][y1[1]])
+        this.ctx.lineTo(center_x, center_y)
+        this.ctx.lineTo(this.points_array[x2[0]][x2[1]], this.points_array[y2[0]][y2[1]])
+        this.ctx.closePath();
+        this.ctx.fillStyle = this.arrow_color;
+        this.ctx.fill();
+        // this.ctx.strokeStyle = '#FF0000'
+        this.ctx.stroke();
+    }
     //Back face
     // line 8 10 11 9
     // [
@@ -267,7 +318,7 @@ export default class Cube {
     // ]
     //
 
-    drawBackFace(){
+    drawBackFace() {
         this.ctx.beginPath();
         this.ctx.moveTo(this.points_array[8][0], this.points_array[8][1]);
         this.ctx.lineTo(this.points_array[8][2], this.points_array[8][3]);
