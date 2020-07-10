@@ -53,7 +53,7 @@ export default class Cube {
         //   return;
         // }
         this.points_array = []
-        this.cube_color = "rgba(255, 100, 100, 0.5)";
+        this.cube_color = "rgba(10, 250, 0, 0.3)";
         for (let i = 0; i < CUBE_LINES.length; i++) {
 
             const v1 = {
@@ -89,7 +89,6 @@ export default class Cube {
         this.drawBottomFace();
         this.drawFrontFace();
         this.drawBackFace();
-        this.ctx.stroke();
     }
 
     //Left face
@@ -120,6 +119,7 @@ export default class Cube {
         this.ctx.closePath();
         this.ctx.fillStyle = this.cube_color
         this.ctx.fill()
+        this.ctx.stroke();
     }
 
     //upper face
@@ -150,6 +150,7 @@ export default class Cube {
         this.ctx.closePath();
         this.ctx.fillStyle = this.cube_color;
         this.ctx.fill()
+        this.ctx.stroke();
     }
 
     //right face
@@ -181,6 +182,7 @@ export default class Cube {
         this.ctx.closePath();
         this.ctx.fillStyle = this.cube_color;
         this.ctx.fill()
+        this.ctx.stroke();
     }
 
     //Bottom face
@@ -212,6 +214,7 @@ export default class Cube {
         this.ctx.closePath();
         this.ctx.fillStyle = this.cube_color
         this.ctx.fill()
+        this.ctx.stroke();
     }
 
     //Front face
@@ -243,6 +246,7 @@ export default class Cube {
         this.ctx.closePath();
         this.ctx.fillStyle = this.cube_color;
         this.ctx.fill()
+        this.ctx.stroke();
     }
 
     //Back face
@@ -273,5 +277,6 @@ export default class Cube {
         this.ctx.closePath();
         this.ctx.fillStyle = this.cube_color;
         this.ctx.fill()
+        this.ctx.stroke();
     }
 }
