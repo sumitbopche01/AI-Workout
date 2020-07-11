@@ -14,7 +14,7 @@ export default class Cube {
         this.ctx = ctx;
         this.tween = gsap.to(this, {
             duration: 3,
-            z: -(window.gameWidth - window.gameWidth*0.25),
+            z: -(window.gameWidth * 0.73),
             onComplete: this.gotHit,
             onCompleteParams: ["Got hit by the cube"],
         });
