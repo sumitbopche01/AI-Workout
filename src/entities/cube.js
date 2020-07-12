@@ -129,8 +129,8 @@ export default class Cube {
 
     drawRightFace() {
         this.ctx.beginPath();
-        this.ctx.moveTo(this.points_array[0][0], this.points_array[0][1]);
-        this.ctx.lineTo(this.points_array[0][2], this.points_array[0][3]);
+        this.ctx.moveTo(this.points_array[0][2], this.points_array[0][3]);
+        this.ctx.lineTo(this.points_array[1][2], this.points_array[1][3]);
         this.ctx.lineTo(this.points_array[5][2], this.points_array[5][3]);
         this.ctx.lineTo(this.points_array[10][2], this.points_array[10][3]);
         this.ctx.lineTo(this.points_array[7][0], this.points_array[7][1]);
