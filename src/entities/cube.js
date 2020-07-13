@@ -2,7 +2,10 @@
 const CUBE_LINES = [[0, 1], [1, 3], [3, 2], [2, 0], [2, 6], [3, 7], [0, 4], [1, 5], [6, 7], [6, 4], [7, 5], [4, 5]];
 const CUBE_VERTICES = [[-1, -1, -1], [1, -1, -1], [-1, 1, -1], [1, 1, -1], [-1, -1, 1], [1, -1, 1], [-1, 1, 1], [1, 1, 1]];
 import gsap from "gsap";
-const depth = 1000
+// import TweenMax from "gsap"
+import { TweenMax, Elastic, Circ } from "gsap";
+// import { shake } from './usecases/fillColor'
+
 
 export default class Cube {
     constructor(ctx) {
@@ -10,13 +13,14 @@ export default class Cube {
         this.y = window.gameWidth * 0.001;
         this.z = window.gameWidth * 0.001;
         console.log(window.gameWidth);
+        this.hit = false;
         this.radius = Math.floor(22);
         this.ctx = ctx;
         this.tween = gsap.to(this, {
             duration: 3,
             z: -(window.gameWidth * 0.73),
             onComplete: this.gotHit,
-            onCompleteParams: ["Got hit by the cube"],
+            onCompleteParams: [this],
         });
         this.points_array = []
         this.cube_color = "rgba(10, 250, 0, 0.3)";
@@ -36,14 +40,19 @@ export default class Cube {
     }
 
     shake() {
-        this.tween.pause();
-        gsap.to(this, 0.1, { x: "+=20", repeat: 5 });
-        gsap.to(this, 0.1, { x: "-=20", repeat: 5 });
-        this.tween.resume();
+        // this.tween.pause();
+        console.log(this);
+        let self = this;
+        TweenMax.fromTo(self, 0.05, { x: -2 }, { x: 2, repeat: 5, yoyo: true, ease: Circ, onComplete: function () { TweenMax.to(self, 0.7, { x: 0, ease: Elastic.easeOut }) } })
+        // shake(self, 2, RoughEase, Elastic.easeInOut);
+        // gsap.fromTo(this, 0.1, { x: "+=10" }, { x: "-=10", repeat: 5 });
+        // gsap.to(this, 0.1, { x: "-=20", repeat: 5 });
+        // this.tween.resume();
     }
 
-    gotHit(message) {
-        console.log(message);
+    gotHit(self) {
+        console.log("cube hit", self.hit);
+        self.hit = true;
     }
 
     destroy() {
@@ -73,7 +82,7 @@ export default class Cube {
 
             this.points_array.push([v1Project.x, v1Project.y, v2Project.x, v2Project.y])
             if (this.points_array.length == 12) {
-                console.log("point array size 12")
+                // console.log("point array size 12")
                 this.drawCube()
                 this.points_array = []
             }
@@ -185,12 +194,12 @@ export default class Cube {
         }
 
         let x1 = arrow_points[this.arrow_direction].x1,
-        y1 = arrow_points[this.arrow_direction].y1,
-        x2 = arrow_points[this.arrow_direction].x2,
-        y2 = arrow_points[this.arrow_direction].y2;
+            y1 = arrow_points[this.arrow_direction].y1,
+            x2 = arrow_points[this.arrow_direction].x2,
+            y2 = arrow_points[this.arrow_direction].y2;
 
-        let center_x = this.points_array[0][0] + (this.points_array[0][2] - this.points_array[0][0])/2
-        let center_y = this.points_array[0][1] + (this.points_array[2][3] - this.points_array[0][1])/2
+        let center_x = this.points_array[0][0] + (this.points_array[0][2] - this.points_array[0][0]) / 2
+        let center_y = this.points_array[0][1] + (this.points_array[2][3] - this.points_array[0][1]) / 2
 
         this.ctx.beginPath();
         this.ctx.moveTo(this.points_array[x1[0]][x1[1]], this.points_array[y1[0]][y1[1]])
@@ -202,8 +211,8 @@ export default class Cube {
         // this.ctx.strokeStyle = '#FF0000'
         this.ctx.stroke();
     }
-    
-    drawBackFace(){
+
+    drawBackFace() {
         this.ctx.beginPath();
         this.ctx.moveTo(this.points_array[8][0], this.points_array[8][1]);
         this.ctx.lineTo(this.points_array[8][2], this.points_array[8][3]);

@@ -15,6 +15,7 @@ const ctx = canvas.getContext('2d');
 /* ====================== */
 import createEntities from './usecases/createEntities';
 import { onResize } from './helpers/resize';
+import { deleteCanvas } from './usecases/fillColor'
 
 /* ====================== */
 /* ====== VARIABLES ===== */
@@ -47,7 +48,13 @@ function render() {
   for (var i = 0; i < entities.length; i++) {
     entities[i].draw();
   }
-  window.requestAnimationFrame(render);
+  if (!entities[0].hit) {
+    console.log(entities[0].hit);
+    window.requestAnimationFrame(render);
+  } else {
+    console.log("hit");
+    deleteCanvas(ctx, canvas);
+  }
 }
 
 window.addEventListener('resize', onResize(canvas, entities, ctx));
