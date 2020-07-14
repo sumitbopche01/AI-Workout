@@ -15,7 +15,7 @@ const ctx = canvas.getContext('2d');
 /* ====================== */
 import createEntities from './usecases/createEntities';
 import { onResize } from './helpers/resize';
-import { deleteCanvas } from './usecases/fillColor'
+import { fillCanvas } from './entities/animateCanvas'
 
 /* ====================== */
 /* ====== VARIABLES ===== */
@@ -49,11 +49,9 @@ function render() {
     entities[i].draw();
   }
   if (!entities[0].hit) {
-    console.log(entities[0].hit);
     window.requestAnimationFrame(render);
   } else {
-    console.log("hit");
-    deleteCanvas(ctx, canvas);
+    fillCanvas(canvas);
   }
 }
 

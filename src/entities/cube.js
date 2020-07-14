@@ -2,9 +2,7 @@
 const CUBE_LINES = [[0, 1], [1, 3], [3, 2], [2, 0], [2, 6], [3, 7], [0, 4], [1, 5], [6, 7], [6, 4], [7, 5], [4, 5]];
 const CUBE_VERTICES = [[-1, -1, -1], [1, -1, -1], [-1, 1, -1], [1, 1, -1], [-1, -1, 1], [1, -1, 1], [-1, 1, 1], [1, 1, 1]];
 import gsap from "gsap";
-// import TweenMax from "gsap"
 import { TweenMax, Elastic, Circ } from "gsap";
-// import { shake } from './usecases/fillColor'
 
 
 export default class Cube {
@@ -41,17 +39,12 @@ export default class Cube {
 
     shake() {
         // this.tween.pause();
-        console.log(this);
         let self = this;
         TweenMax.fromTo(self, 0.05, { x: -2 }, { x: 2, repeat: 5, yoyo: true, ease: Circ, onComplete: function () { TweenMax.to(self, 0.7, { x: 0, ease: Elastic.easeOut }) } })
-        // shake(self, 2, RoughEase, Elastic.easeInOut);
-        // gsap.fromTo(this, 0.1, { x: "+=10" }, { x: "-=10", repeat: 5 });
-        // gsap.to(this, 0.1, { x: "-=20", repeat: 5 });
         // this.tween.resume();
     }
 
     gotHit(self) {
-        console.log("cube hit", self.hit);
         self.hit = true;
     }
 
