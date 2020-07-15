@@ -24,7 +24,7 @@ import { onResize } from './helpers/resize';
 window.gameWidth = canvas.clientWidth; // Width of the canvas
 window.gameHeight = canvas.clientHeight; // Height of the canvas
 const entities = []; // Every entities in an array
-const button = document.getElementById("startButton");
+const startButton = document.getElementById("startButton");
 
 /* ====================== */
 /* ====== CONSTANTS ===== */
@@ -41,23 +41,20 @@ if (window.devicePixelRatio > 1) {
 }
 
 window.onload = function loadStartMenu(){
-  gsap.fromTo("#startButton", {autoAlpha: 0, x:"50%", y:-100}, {autoAlpha: 1, x:"50%", y: "100%", duration: 3});
+  window.ee.emit("loadMenu", startButton);
 }
 
-button.onclick = function startWorkout(){
+startButton.onclick = function startWorkout(){
+  // window.ee.emit("removeStartButton", startButton);
+  window.ee.emit("startWorkout");
   
-  const button = document.querySelector("#startButton");
-  gsap.to(button, {autoAlpha: 0, onComplete: showCanvas, duration: 2});
+  gsap.to(startButton, {autoAlpha: 0, onComplete: showCanvas, duration: 2});
 }
 
 eventConnection();
 
 function showCanvas() {
 
-  const button = document.querySelector("#startButton");
-  button.classList.add("display");
-  window.ee.emit("startGame");
-  
   // Populate the entities array with required entities
   createEntities(entities, ctx);
 
