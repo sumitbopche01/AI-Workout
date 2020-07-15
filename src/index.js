@@ -55,7 +55,7 @@ function render() {
   }
 }
 
-window.addEventListener('resize', onResize(canvas, entities, ctx));
+// window.addEventListener('resize', onResize(canvas, entities, ctx));
 
 // Populate the entities array with required entities
 createEntities(entities, ctx);

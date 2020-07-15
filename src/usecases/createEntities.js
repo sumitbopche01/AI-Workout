@@ -3,10 +3,16 @@ import Cube from '../entities/cube'
 export default function createEntities(entities, ctx) {
     // Empty the array of entities
     entities.length = 0;
-
-    // Create a new dot based on the amount needed
-    // for (let i = 0; i < 100; i++) {
-        let cube = new Cube(ctx)
+    function generateEntities() {
+        let time = randomInteger(1000, 2000);
+        let cube = new Cube(ctx);
         entities.push(cube);
-    // }
+        setTimeout(generateEntities, time);
+    }
+
+    generateEntities();
+}
+
+function randomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
