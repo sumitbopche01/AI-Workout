@@ -1,3 +1,11 @@
+html { 
+    background: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/23d52755-ed7c-4529-86fb-a817fb58fa46/d415o1h-1bb7d215-acad-49e0-9ca8-6bff6193a547.jpg/v1/fill/w_900,h_540,q_75,strp/requiem_main_menu_background_by_rusty001_d415o1h-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD01NDAiLCJwYXRoIjoiXC9mXC8yM2Q1Mjc1NS1lZDdjLTQ1MjktODZmYi1hODE3ZmI1OGZhNDZcL2Q0MTVvMWgtMWJiN2QyMTUtYWNhZC00OWUwLTljYTgtNmJmZjYxOTNhNTQ3LmpwZyIsIndpZHRoIjoiPD05MDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.IRghCMPkbZs08q9slABn9ASxrMeIQfdjPtQvkW8DtKE") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  
 body {
     margin: 0;
     overflow: hidden;
@@ -6,4 +14,27 @@ body {
 canvas {
     width: 100vw;
     height: 100vh;
+}
+
+.display{
+    display: none;
+}
+
+.startWorkoutButton{
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-height: 4rem;
+    width: 10rem;
+    font-size: 15px;
+    font-weight: bold;
+    background: rgb(130, 223, 158);
+    cursor: pointer;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+
+.startWorkoutButton:hover{
+    background: rgb(73, 255, 128);
 }
