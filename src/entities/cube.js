@@ -4,6 +4,8 @@ const CUBE_VERTICES = [[-1, -1, -1], [1, -1, -1], [-1, 1, -1], [1, 1, -1], [-1, 
 import gsap from "gsap";
 const depth = 1000
 import createShatteredCubeEntities from '../usecases/createShatteredCubeEntities';
+import { TweenMax, Elastic, Circ } from "gsap";
+
 
 export default class Cube {
     constructor(ctx) {
@@ -11,13 +13,14 @@ export default class Cube {
         this.y = window.gameWidth * 0.001;
         this.z = window.gameWidth * 0.001;
         console.log(window.gameWidth);
+        this.hit = false;
         this.radius = Math.floor(22);
         this.ctx = ctx;
         this.tween = gsap.to(this, {
             duration: 3,
-            z: -(window.gameWidth * 0.75),
+            z: -(window.gameWidth * 0.73),
             onComplete: this.gotHit,
-            onCompleteParams: ["Got hit by the cube"],
+            onCompleteParams: [this],
         });
         this.points_array = []
         this.cube_color = "rgba(255, 0, 0, 0.5)";
@@ -38,14 +41,14 @@ export default class Cube {
     }
 
     shake() {
-        this.tween.pause();
-        gsap.to(this, 0.1, { x: "+=20", repeat: 5 });
-        gsap.to(this, 0.1, { x: "-=20", repeat: 5 });
-        this.tween.resume();
+        // this.tween.pause();
+        let self = this;
+        TweenMax.fromTo(self, 0.05, { x: -2 }, { x: 2, repeat: 5, yoyo: true, ease: Circ, onComplete: function () { TweenMax.to(self, 0.7, { x: 0, ease: Elastic.easeOut }) } })
+        // this.tween.resume();
     }
 
-    gotHit(message) {
-        console.log(message);
+    gotHit(self) {
+        self.hit = true;
     }
 
     destroy() {
@@ -93,6 +96,8 @@ export default class Cube {
         this.drawBottomFace();
         this.drawFrontFace();
         this.drawBackFace();
+        //from_left, from_right, from_upper, from_bottom
+        this.drawArrow();
     }
 
     drawLeftFace() {
@@ -158,9 +163,6 @@ export default class Cube {
         this.ctx.fillStyle = this.cube_color;
         this.ctx.fill()
         this.ctx.stroke();
-
-        //from_left, from_right, from_upper, from_bottom
-        this.drawArrow();
     }
 
     drawArrow() {

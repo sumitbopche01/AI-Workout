@@ -15,6 +15,7 @@ const ctx = canvas.getContext('2d');
 /* ====================== */
 import createEntities from './usecases/createEntities';
 import { onResize } from './helpers/resize';
+import { fillCanvas } from './entities/animateCanvas'
 
 /* ====================== */
 /* ====== VARIABLES ===== */
@@ -55,7 +56,11 @@ function render() {
     }
     // entities[i].drawShatteredCube()
   }
-  window.requestAnimationFrame(render);
+  if (!entities[0].hit) {
+    window.requestAnimationFrame(render);
+  } else {
+    fillCanvas(canvas);
+  }
 }
 
 setTimeout(() => {
@@ -64,7 +69,8 @@ setTimeout(() => {
 
 // entities[0].drawShatteredCube()
 
-window.addEventListener('resize', onResize(canvas, entities, ctx));
+// window.addEventListener('resize', onResize(canvas, entities, ctx));
+// window.addEventListener('resize', onResize(canvas, entities, ctx));
 
 // Populate the entities array with required entities
 createEntities(entities, ctx);
