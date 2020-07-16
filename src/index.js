@@ -1,4 +1,6 @@
 import './style.css';
+import gsap from "gsap";
+import eventConnection from "./usecases/eventConnections";
 console.clear();
 
 /* ====================== */
@@ -23,6 +25,7 @@ import { fillCanvas } from './entities/animateCanvas'
 window.gameWidth = canvas.clientWidth; // Width of the canvas
 window.gameHeight = canvas.clientHeight; // Height of the canvas
 const entities = []; // Every entities in an array
+const startButton = document.getElementById("startButton");
 
 /* ====================== */
 /* ====== CONSTANTS ===== */
@@ -36,6 +39,28 @@ if (window.devicePixelRatio > 1) {
   canvas.width = canvas.clientWidth * 2;
   canvas.height = canvas.clientHeight * 2;
   ctx.scale(2, 2);
+}
+
+window.onload = function loadStartMenu(){
+  window.ee.emit("loadMenu");
+}
+
+startButton.onclick = function startWorkout(){
+  // window.ee.emit("removeStartButton");
+  window.ee.emit("startWorkout");
+  
+  gsap.to(startButton, {autoAlpha: 0, onComplete: showCanvas, duration: 2});
+}
+
+eventConnection();
+
+function showCanvas() {
+
+  // Populate the entities array with required entities
+  createEntities(entities, ctx);
+
+  // Render the scene
+  window.requestAnimationFrame(render);
 }
 
 /* ====================== */
@@ -77,3 +102,4 @@ createEntities(entities, ctx);
 
 // Render the scene
 window.requestAnimationFrame(render);
+window.addEventListener('resize', onResize(canvas, entities, ctx));
