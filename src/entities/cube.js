@@ -8,12 +8,12 @@ import { TweenMax, Elastic, Circ } from "gsap";
 
 
 export default class Cube {
-    constructor(ctx) {
+    constructor(ctx, cube_color, arrow_color, arrow_direction) {
         this.x = window.gameWidth * 0.001;
         this.y = window.gameWidth * 0.001;
         this.z = window.gameWidth * 0.001;
         // console.log(window.gameWidth);
-        this.hit = false;
+        this.is_hit = false;
         this.radius = Math.floor(22);
         this.ctx = ctx;
         this.tween = gsap.to(this, {
@@ -23,9 +23,9 @@ export default class Cube {
             onCompleteParams: [this],
         });
         this.points_array = []
-        this.cube_color = "rgba(255, 0, 0, 0.5)";
-        this.arrow_color = "rgba(255, 0, 0, 0.8)";
-        this.arrow_direction = 'from_left';
+        this.cube_color = cube_color ? cube_color : "rgba(255, 0, 0, 0.5)";
+        this.arrow_color = arrow_color ? arrow_color : "rgba(255, 0, 0, 0.8)";
+        this.arrow_direction = arrow_direction ? arrow_direction : 'from_left';
         this.stop_drawing = false;
         this.is_destroyed = false;
     }
@@ -49,7 +49,7 @@ export default class Cube {
     }
 
     gotHit(self) {
-        self.hit = true;
+        self.is_hit = true;
     }
 
     destroy() {
