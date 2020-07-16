@@ -6,8 +6,9 @@ export default function createEntities(entities, ctx) {
     function generateEntities() {
         let time = randomInteger(1000, 2000);
         let cube = new Cube(ctx);
+        window.cube = cube;
         entities.push(cube);
-        setTimeout(generateEntities, time);
+        // setTimeout(generateEntities, time);
     }
 
     generateEntities();
