@@ -71,7 +71,7 @@ function render() {
   ctx.clearRect(0, 0, window.gameWidth, window.gameHeight);
   // Loop through the entities array and draw every entity
   for (var i = 0; i < entities.length; i++) {
-    if (entities[i].stop_drawing) {
+    if (entities[i].stop_drawing && !entities[i].is_destroyed) {
       for (let triangle of entities[i].shattered_cube_list) {
         triangle.draw();
       }
@@ -88,18 +88,10 @@ function render() {
   }
 }
 
-setTimeout(() => {
-  entities[0].destroy()
-}, 2000);
-
-// entities[0].drawShatteredCube()
-
 // window.addEventListener('resize', onResize(canvas, entities, ctx));
 // window.addEventListener('resize', onResize(canvas, entities, ctx));
 
 // Populate the entities array with required entities
 createEntities(entities, ctx);
 
-// Render the scene
-window.requestAnimationFrame(render);
 window.addEventListener('resize', onResize(canvas, entities, ctx));
