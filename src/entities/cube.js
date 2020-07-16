@@ -3,6 +3,7 @@ const CUBE_LINES = [[0, 1], [1, 3], [3, 2], [2, 0], [2, 6], [3, 7], [0, 4], [1, 
 const CUBE_VERTICES = [[-1, -1, -1], [1, -1, -1], [-1, 1, -1], [1, 1, -1], [-1, -1, 1], [1, -1, 1], [-1, 1, 1], [1, 1, 1]];
 import gsap from "gsap";
 const depth = 1000
+import createShatteredCubeEntities from '../usecases/createShatteredCubeEntities';
 
 export default class Cube {
     constructor(ctx) {
@@ -19,13 +20,10 @@ export default class Cube {
             onCompleteParams: ["Got hit by the cube"],
         });
         this.points_array = []
-        this.cube_color = "rgba(10, 250, 0, 0.3)";
-        this.arrow_color = "rgba(0, 255, 0)";
+        this.cube_color = "rgba(255, 0, 0, 0.5)";
+        this.arrow_color = "rgba(255, 0, 0, 0.8)";
         this.arrow_direction = 'from_left';
-        this.iteration = 0
-        // setTimeout(() => {
-        //     this.destroy()
-        // }, 2000);
+        this.stop_drawing = false;
     }
     // Do some math to project the 3D position into the 2D canvas
     project(x, y, z) {
@@ -51,14 +49,8 @@ export default class Cube {
     }
 
     destroy() {
-        console.log('destroy is called')
-
-        //    this.ctx.globalAlpha = 0;
-
-        this.ctx.clearRect(0, 0, window.gameWidth, window.gameHeight)
-        //    this.ctx.globalAlpha = 0.5
-        //    this.drawShatteredCube()
-        this.destroyCube();
+        this.stop_drawing = true;
+        this.shattered_cube_list = createShatteredCubeEntities(this);
         this.tween.kill();
     }
 
@@ -68,26 +60,28 @@ export default class Cube {
         // if (this.z < -FIELD_OF_VIEW + this.radius) {
         //   return;
         // }
-        for (let i = 0; i < CUBE_LINES.length; i++) {
+        if (!this.stop_drawing) {
+            for (let i = 0; i < CUBE_LINES.length; i++) {
 
-            const v1 = {
-                x: this.x + (this.radius * CUBE_VERTICES[CUBE_LINES[i][0]][0]),
-                y: this.y + (this.radius * CUBE_VERTICES[CUBE_LINES[i][0]][1]),
-                z: this.z + (this.radius * CUBE_VERTICES[CUBE_LINES[i][0]][2])
-            };
-            const v2 = {
-                x: this.x + (this.radius * CUBE_VERTICES[CUBE_LINES[i][1]][0]),
-                y: this.y + (this.radius * CUBE_VERTICES[CUBE_LINES[i][1]][1]),
-                z: this.z + (this.radius * CUBE_VERTICES[CUBE_LINES[i][1]][2])
-            };
-            const v1Project = this.project(v1.x, v1.y, v1.z);
-            const v2Project = this.project(v2.x, v2.y, v2.z);
+                const v1 = {
+                    x: this.x + (this.radius * CUBE_VERTICES[CUBE_LINES[i][0]][0]),
+                    y: this.y + (this.radius * CUBE_VERTICES[CUBE_LINES[i][0]][1]),
+                    z: this.z + (this.radius * CUBE_VERTICES[CUBE_LINES[i][0]][2])
+                };
+                const v2 = {
+                    x: this.x + (this.radius * CUBE_VERTICES[CUBE_LINES[i][1]][0]),
+                    y: this.y + (this.radius * CUBE_VERTICES[CUBE_LINES[i][1]][1]),
+                    z: this.z + (this.radius * CUBE_VERTICES[CUBE_LINES[i][1]][2])
+                };
+                const v1Project = this.project(v1.x, v1.y, v1.z);
+                const v2Project = this.project(v2.x, v2.y, v2.z);
 
-            this.points_array.push([v1Project.x, v1Project.y, v2Project.x, v2Project.y])
-            if (this.points_array.length == 12) {
-                console.log("point array size 12")
-                this.drawCube()
-                this.points_array = []
+                this.points_array.push([v1Project.x, v1Project.y, v2Project.x, v2Project.y])
+                if (this.points_array.length == 12) {
+                    this.drawCube()
+                    this.last_points = this.points_array;
+                    this.points_array = []
+                }
             }
         }
     }
@@ -268,26 +262,7 @@ export default class Cube {
         clearInterval(this.desInterval);
     }
 
-    drawShatteredCube(self) {
-
-        let x = 1000, y = 1000;
-        let range = 700;
-        // this.ctx.globalAlpha = 0.5
-        console.log("shattered draw is called")
-        for (let i = 0; i < 350; i++) {
-            self.ctx.beginPath()
-            let x_rand = x * Math.random(), y_rand = y * Math.random()
-            self.ctx.moveTo(x_rand, y_rand)
-            self.ctx.lineTo(x_rand - (Math.random() * 160) + 50, y_rand - (Math.random() * 160) + 50)
-            self.ctx.lineTo(x_rand - (Math.random() * 160) + 50, y_rand - (Math.random() * 160) + 50)
-
-            let color = (Math.random() * 250) + 10
-            console.log('color is as ', color)
-            self.ctx.fillStyle = `rgba(0, ${color}, 0, 0.3)`;
-            self.ctx.fill()
-            self.ctx.closePath()
-            self.ctx.stroke()
-        }
-
+    drawShatteredCube() {
     }
+
 }
