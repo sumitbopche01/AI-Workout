@@ -41,11 +41,11 @@ if (window.devicePixelRatio > 1) {
 }
 
 window.onload = function loadStartMenu(){
-  window.ee.emit("loadMenu", startButton);
+  window.ee.emit("loadMenu");
 }
 
 startButton.onclick = function startWorkout(){
-  // window.ee.emit("removeStartButton", startButton);
+  // window.ee.emit("removeStartButton");
   window.ee.emit("startWorkout");
   
   gsap.to(startButton, {autoAlpha: 0, onComplete: showCanvas, duration: 2});
