@@ -12,7 +12,7 @@ export default class Cube {
         this.x = window.gameWidth * 0.001;
         this.y = window.gameWidth * 0.001;
         this.z = window.gameWidth * 0.001;
-        console.log(window.gameWidth);
+        // console.log(window.gameWidth);
         this.hit = false;
         this.radius = Math.floor(22);
         this.ctx = ctx;
@@ -27,6 +27,7 @@ export default class Cube {
         this.arrow_color = "rgba(255, 0, 0, 0.8)";
         this.arrow_direction = 'from_left';
         this.stop_drawing = false;
+        this.is_destroyed = false;
     }
     // Do some math to project the 3D position into the 2D canvas
     project(x, y, z) {
@@ -53,7 +54,7 @@ export default class Cube {
 
     destroy() {
         this.stop_drawing = true;
-        this.shattered_cube_list = createShatteredCubeEntities(this);
+        window.ee.emit('destroy', this);
         this.tween.kill();
     }
 
@@ -263,8 +264,4 @@ export default class Cube {
         console.log('stop it called')
         clearInterval(this.desInterval);
     }
-
-    drawShatteredCube() {
-    }
-
 }
