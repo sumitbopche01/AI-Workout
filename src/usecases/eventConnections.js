@@ -1,36 +1,40 @@
 import * as EventEmitter from "events";
 import LoadMenu from "./loadMenu"
 import createShatteredCubeEntities from './createShatteredCubeEntities';
+import { render, callCreateEntity } from './render';
+import createEntities from './createEntities';
 
-export default function (){
+export default function () {
 
-    window.ee = new EventEmitter();
+  window.ee = new EventEmitter();
 
-    window.ee.on("loadMenu", () => {
-      LoadMenu("loadMenu");
-    });
+  window.ee.on("loadMenu", () => {
+    LoadMenu("loadMenu");
+  });
 
-    window.ee.on('removeStartButton', () => {
-      LoadMenu("removeStartButton");
-    });
+  window.ee.on('removeStartButton', () => {
+    LoadMenu("removeStartButton");
+  });
 
-    window.ee.on('startWorkout', () => {
-      console.log('start work out event called')
-    });
+  window.ee.on('startWorkout', () => {
+    callCreateEntity()
+    render()
+  });
 
-    window.ee.on('gotHit', () => {
-    });
+  window.ee.on('gotHit', () => {
+  });
 
-    
-    window.ee.on('destroy', (entity) => {
-      entity.shattered_cube_list = createShatteredCubeEntities(entity);
-      console.log('destroy is called ')
-    });
-    
-    window.ee.on('gameOver', () => {
-    });
+  window.ee.on('destroy', (entity) => {
+    entity.shattered_cube_list = createShatteredCubeEntities(entity);
+    // callCreateEntity();
+  });
 
-    window.ee.on('destroyComplete', (entity)=> {
-      entity.is_destroyed = true;
-    });
+  window.ee.on('gameOver', () => {
+  });
+
+  window.ee.on('destroyComplete', (entity) => {
+    entity.is_destroyed = true;
+    console.log('call create entity');
+    callCreateEntity();
+  });
 }
