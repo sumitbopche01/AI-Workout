@@ -34,7 +34,6 @@ export default function () {
 
   window.ee.on('destroyComplete', (entity) => {
     entity.is_destroyed = true;
-    console.log('call create entity');
     callCreateEntity();
   });
 }
