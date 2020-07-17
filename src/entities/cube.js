@@ -226,42 +226,4 @@ export default class Cube {
         this.ctx.stroke();
     }
 
-    destroyCube() {
-        var self = this;
-        this.desInterval = setInterval(function () {
-            self.ctx.clearRect(0, 0, window.gameWidth, window.gameHeight);
-            console.log('interval')
-            self.drawShatteredCube(self)
-
-            self.ctx.globalAlpha -= 0.1;
-            if (self.ctx.globalAlpha < 0.1) {
-                // ctx.globalAlpha = 0
-                self.ctx.clearRect(0, 0, 1000, 1000);
-                console.log("now less than 0")
-                self.stopIteration()
-            }
-            console.log(self.ctx.globalAlpha, "global")
-        }, 100);
-        // this.destroyedCube()
-    }
-
-    destroyedCube() {
-        this.ctx.clearRect(0, 0, window.gameWidth, window.gameHeight);
-        console.log('interval')
-        this.drawShatteredCube()
-
-        this.ctx.globalAlpha -= 0.1;
-        if (this.ctx.globalAlpha < 0.1) {
-            // ctx.globalAlpha = 0
-            this.ctx.clearRect(0, 0, 1000, 1000);
-            console.log("now less than 0")
-            this.stopIteration()
-        }
-        console.log(this.ctx.globalAlpha, "global")
-    }
-
-    stopIteration() {
-        console.log('stop it called')
-        clearInterval(this.desInterval);
-    }
 }
