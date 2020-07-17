@@ -14,7 +14,7 @@ export default class Cube {
         this.ctx = ctx;
         this.tween = gsap.to(this, {
             duration: 3,
-            z: -(window.gameWidth * 0.75),
+            z: -(window.gameWidth * 0.73),
             onComplete: this.gotHit,
             onCompleteParams: ["Got hit by the cube"],
         });
@@ -85,7 +85,6 @@ export default class Cube {
 
             this.points_array.push([v1Project.x, v1Project.y, v2Project.x, v2Project.y])
             if (this.points_array.length == 12) {
-                console.log("point array size 12")
                 this.drawCube()
                 this.points_array = []
             }
@@ -99,6 +98,8 @@ export default class Cube {
         this.drawBottomFace();
         this.drawFrontFace();
         this.drawBackFace();
+        //from_left, from_right, from_upper, from_bottom
+        this.drawArrow();
     }
 
     drawLeftFace() {
@@ -164,9 +165,6 @@ export default class Cube {
         this.ctx.fillStyle = this.cube_color;
         this.ctx.fill()
         this.ctx.stroke();
-
-        //from_left, from_right, from_upper, from_bottom
-        this.drawArrow();
     }
 
     drawArrow() {
